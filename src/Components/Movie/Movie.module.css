@@ -1,0 +1,9 @@
+.vote{
+    position: absolute;
+    top: 0;
+    right: 0px;
+    padding: 3px 9px;
+    background-color: #1ABCFE;
+    color: white;
+    font-weight: bold;
+}

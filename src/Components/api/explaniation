@@ -1,0 +1,106 @@
+API_KEY = 0bd0730b59625b4570f8f531b92473f1;
+  for movie ==>https://api.themoviedb.org/3/trending/movie/day?api_key=0bd0730b59625b4570f8f531b92473f1
+  for poster type ==> https://image.tmdb.org/t/p/original/
+base url ===> https://route-api-egypt
+real link of api is base url + end point ===> https://route-api-egypt/signup
+
+
+
+
+=====================================================
+ EndPoint: /signup //end point                      =
+ Method: POST                                       =
+ JSON Format:                                       =
+ {                                                  =
+    "first_name":"ahmed",                           =
+    "last_name" :"eid",                             =
+    "email":"ahmdalrwby24@getDefaultNormalizer.com",=
+    "password":"ahmed234",                          =
+    "age":"23"                                      =
+ }                                                  =                    
+=====================================================   
+
+first u must test api and see the response of request and make if condition if message === "success" ==> got to home page else show error password not correct or any thing else
+
+
+
+--------------------------------------------------------
+spa==> single page application mean that using routing -
+--------------------------------------------------------
+
+
+                            if u start any projec u must make this steps.....
+                     ______________________________________________________________
+
+
+   1- create all components that u need it (main components)
+   2- install all package that u needd (main packages)
+   3- use react router dom to make SPA
+   4- find the fixed design in all components and design it (background , font family)
+   5- always start from difficult part as authentication and authorization
+   6- start with design then logic =====> design depended on backend to speciefic many of labels
+   ______________________________________________________________________________
+
+   
+   -- authentication ===> التحقق هل اليوزر مسموح ليه انه يدخل علي الموقع ام لا  == make login
+     to make authentication :-
+     * first step sned data to backend => function to get data from user and send to backend 
+     1- send data that user enter to backend that save data in database  
+     discussion==> make variable and store data in it then take deep copy from old data as
+     let newuser = {...user } ==> deep copy 
+     2- to get element name use elementName= e.target.id 
+     3- to get value of element elementValue =  e.target.value 
+     ===> newuser[elementName] = elementValue;
+     setUser(newuser)
+
+     ______________________________________________________________
+
+
+     * second step :- validation => function to make validation by using joi library 
+     {
+      - alphanum ==> mean letters and numbers only not special characters 
+      - mindomainsegments => any letter after @ as ahmed@gmail ==> gmail
+      mindomainsegments:2 => min letter in segment is 2 ;
+      - tlds ==> top level domains [com,net] => tlds:{allow:["com","net"]}
+      email({mindomainsegment: 2,tlds:{allow;["com","net"]}}) ==> ahmed@gmail.com => is validated
+ 
+
+      schema.validate(user,abortearly:true)==> mean that if get first eerot get out 
+      must be false to check all inputs ==< abortearly:false>
+     
+     }
+     by using joi library
+
+
+    * third step :- make function to call api
+    async function sendUser (){
+      const {data} = await axios.post("url",user);
+      if(data.message === "success"){
+        navigate("/home")
+      }else{
+        // show error in page 
+      }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   -- authorization ====>  ان فيه صفحات ميقدرش اليوزر  يدخلها او يقدر يعمل ديليت لاي كمبوننت او انه يدخل علي صفحات انا مانعه منها 
+
+
+
+
+for login ==> https://ecommerce.routemisr.com/api/v1/auth/signin
+for register ==> https://ecommerce.routemisr.com/api/v1/auth/signup

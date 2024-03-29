@@ -1,0 +1,42 @@
+.vote{
+    position: absolute;
+    top: 0;
+    right: 2px;
+    padding: 3px 9px;
+    background-color: #1ABCFE;
+    color: white;
+    font-weight: bold;
+}
+.title{
+    position: relative;
+    line-height: 1.8;
+}
+.title::after{
+    content: "";
+    position: absolute;
+    bottom: 117%;
+    width: 25%;
+    height: 2px;
+    left: 0px;
+    background-color: #1ABCFE;
+}
+.title::before{
+    content: "";
+    position: absolute;
+    top: 106%;
+    width: 70%;
+    height: 2px ;
+    left: 0px;
+    background-color: #1ABCFE;
+}
+@media (min-width: 992px) {
+    .title::after{
+        bottom: 114%;
+
+    }
+    .title::before{
+        
+        top: 120%;
+
+    }
+}
