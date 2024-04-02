@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import axios from 'axios'
 import  {  useState } from 'react'
 import "./TV.css"
+import { Link } from 'react-router-dom';
 
 function TV() {
     const [allTv, setAllTv] = useState(null);
@@ -22,6 +23,8 @@ function TV() {
 
         {allTv.map((tvs, idx) => (
           <div key={idx} className="col-md-3">
+                        <Link to={`/moviedetails/tv/${tvs.id}`}>
+
             <div className="movie position-relative">
               <img
                 className="w-100"
@@ -35,6 +38,7 @@ function TV() {
                 {(tvs.vote_average).toFixed(1)} / 10
               </span>
             </div>
+            </Link>
           </div>
         ))}
       </div>

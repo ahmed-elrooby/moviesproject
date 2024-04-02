@@ -7,17 +7,29 @@ const Home = () => {
   const [allmovies, setAllmovies] = useState(null);
   const [alltv, setAlltv] = useState(null);
   async function movies() {
-    const { data } = await axios.get(
-      "https://api.themoviedb.org/3/trending/movie/day?api_key=0bd0730b59625b4570f8f531b92473f1"
-    );
-    setAllmovies(data.results);
+    try {
+      const { data } = await axios.get(
+        "https://api.themoviedb.org/3/trending/movie/day?api_key=0bd0730b59625b4570f8f531b92473f1"
+      );
+      setAllmovies(data.results);
+    }
+     catch (error) {
+      console.error("error",error)
+      
+    }
   }
 
+
   async function getTv() {
-    const { data } = await axios.get(
-      "https://api.themoviedb.org/3/trending/tv/day?api_key=0bd0730b59625b4570f8f531b92473f1"
-    );
-    setAlltv(data.results);
+    try{
+      const { data } = await axios.get(
+        "https://api.themoviedb.org/3/trending/tv/day?api_key=0bd0730b59625b4570f8f531b92473f1"
+      );
+      setAlltv(data.results)
+    }catch(error){
+      console.error("error",error)
+
+    }
   }
   useEffect(() => {
     movies();

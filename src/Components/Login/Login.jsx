@@ -4,9 +4,11 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import LoginAnimation from "../images/Login.json"
 import axios from 'axios';
-const Login = () => {
+const Login = ( {use}) => {
 
+// function showError(key){
 
+// }
 
 const [apiMessage, setApiMessage] = useState("")
   let navigate = useNavigate();
@@ -26,16 +28,22 @@ const [apiMessage, setApiMessage] = useState("")
 
 
   async function sendUser(){
-    const {data} = await axios.post("https://ecommerce.routemisr.com/api/v1/auth/signin",user)
-    console.log(data);
+    try{
+      const {data} = await axios.post("https://ecommerce.routemisr.com/api/v1/auth/signin",user)
+      console.log(data);
       if(data.message === "success"){
         //call api
+        localStorage.setItem("tkn",data.token)
+        use();
         navigate("/home")
 
         // go to home page 
-      }else{
-           setApiMessage(data.message)
       }
+    }catch(error){
+      setApiMessage(error.response.data.message)
+
+    }
+
   
   }
  
@@ -60,14 +68,16 @@ function regUser(e){
 
   return  <>
   <div className="container">
-    {
-      apiMessage.length === 0?"":<div className='alert alert-danger'>{apiMessage}</div>
-    }
+   
     <div className="row align-items-center">
+      
       <div className="col-md-8">
          <div className="w-80 m-auto py-3">
     <h3>Login Form</h3>
     <form action="" onSubmit={regUser}>
+    {
+      apiMessage.length === 0?"":<div className='alert alert-danger'>{apiMessage}</div>
+    }
       {error === null?"": error.map((err,idx)=><div key={idx} className='alert alert-danger'>{err.message}</div>)  }
        
         <label htmlFor="email">email</label>
