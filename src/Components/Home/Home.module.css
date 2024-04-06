@@ -7,9 +7,64 @@
     color: white;
     font-weight: bold;
 }
+.movie{
+    position:relative;
+
+}
+
+.movie .data{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 0%;
+    height: 0%;
+    background-color: #13172299;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+opacity: 0;
+}
+.movie:hover .data{
+height: 100%;
+width: 100%;
+border-radius: 0px !important;
+opacity: 1;
+}
+
+.tv{
+    position: relative;
+}
+.tv .data{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 0%;
+    height: 0%;
+    background-color: #13172299;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+opacity: 0;
+}
+.tv:hover .data{
+height: 100%;
+width: 100%;
+border-radius: 0px !important;
+opacity: 1;
+}
+
 .title{
     position: relative;
     line-height: 1.8;
+    
 }
 .title::after{
     content: "";
@@ -19,16 +74,26 @@
     height: 2px;
     left: 0px;
     background-color: #1ABCFE;
+    transition: all 0.3s ease-in-out ;
+
+
 }
 .title::before{
     content: "";
     position: absolute;
     top: 106%;
-    width: 70%;
+    width: 25%;
     height: 2px ;
-    left: 0px;
+    right: 0px;
     background-color: #1ABCFE;
+    transition: all 0.3s ease-in-out ;
+
 }
+.title:hover::after,
+.title:hover::before{
+    width:100% ;
+}
+
 @media (min-width: 992px) {
     .title::after{
         bottom: 114%;

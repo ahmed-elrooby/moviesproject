@@ -1,11 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Lottie from "lottie-react";
+import loaddingAnimation from "../images/loadding.json";
+import { motion } from "framer-motion";
+import { Helmet } from "react-helmet";
 
 function MovieDetails() {
   const [details, setDetails] = useState(null);
   let { id, media } = useParams();
-  console.log(media);
 
   async function getDetails() {
     const { data } = await axios.get(
@@ -21,19 +24,65 @@ function MovieDetails() {
     <>
       {details ? (
         <div className="container w-100">
-          <div className="row text-capitalize">
-            <div className="col-md-3">
-              <img
+              <Helmet>
+              <title>{`${details.name || details.title} ${media === "tv" ? "TV" : "Movie"}`}</title>
+<meta name="description" content="my home page"/>
+
+    </Helmet>
+          <div className="row mt-5 text-capitalize">
+            <motion.div
+              initial={{ x: -100 }}
+              transition={{
+                duration: 0.2,
+                type: "spring",
+                stiffness: 100,
+                mass: 0.5,
+                damping: 3,
+              }}
+              whileInView={{
+                x: 0,
+              }}
+              className="col-md-3"
+            >
+              <motion.img
+                initial={{ scale: 1 }}
+                transition={{
+                  duration: 0.2,
+                  type: "spring",
+                  stiffness: 100,
+                  mass: 0.5,
+                  damping: 3,
+                }}
+                whileHover={{
+                  scale: 1.1,
+                }}
                 className="w-100"
                 src={`https://image.tmdb.org/t/p/original/${details.poster_path}`}
                 alt=""
               />
-            </div>
-            <div className="col-md-9">
+            </motion.div>
+            <motion.div
+              initial={{ x: 100 }}
+              transition={{
+                duration: 0.2,
+                type: "spring",
+                stiffness: 100,
+                mass: 0.5,
+                damping: 3,
+              }}
+              whileInView={{
+                x: 0,
+              }}
+              className="col-md-9"
+            >
               <div className="moviedetails d-flex flex-column gap-2">
-                <h4 className="text-info">{details.title}</h4>
+                {media === "tv" ? (
+                  <h4 className="text-info">{details.name}</h4>
+                ) : (
+                  <h4 className="text-info">{details.title}</h4>
+                )}
                 <p>{details.tagline}</p>
-                <div className="hashtag d-flex gap-3">
+                <div className="hashtag d-flex gap-3 flex-wrap">
                   {details.genres.map((hash, idx) => (
                     <span key={idx} className="bg-info px-4 py-1 rounded">
                       {hash.name}
@@ -48,14 +97,22 @@ function MovieDetails() {
                 <h5> vote count : {details.vote_count}</h5>
                 <h5> popularity : {details.popularity}</h5>
                 <h5> release date : {details.release_date}</h5>
-                <p style={{ color: "#ffffff85" }}>{details.overview}</p>
+                <p
+                  style={{
+                    color: "#ffffff85",
+                    fontSize: "16px",
+                    lineHeight: "1.5",
+                  }}
+                >
+                  {details.overview}
+                </p>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       ) : (
         <div className="vh-100 d-flex justify-content-center align-items-center">
-          <i className="fa-solid fa-spinner fa-spin fa-7x text-white"></i>
+          <Lottie animationData={loaddingAnimation}></Lottie>
         </div>
       )}
     </>

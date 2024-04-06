@@ -104,3 +104,13 @@ spa==> single page application mean that using routing -
 
 for login ==> https://ecommerce.routemisr.com/api/v1/auth/signin
 for register ==> https://ecommerce.routemisr.com/api/v1/auth/signup
+
+
+
+
+
+===================================================
+multi search {movies,tv,persone,any thing}
+base_url = "https://api.themoviedb.org/3/search/multi";
+api_key = api_key=0bd0730b59625b4570f8f531b92473f1;
+query ==> word that search by it ;

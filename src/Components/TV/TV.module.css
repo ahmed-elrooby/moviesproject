@@ -1,9 +1,8 @@
-.movie{
-    position:relative;
-
+.tv{
+    position: relative;
 }
 
-.movie .data{
+.tv .data{
     position: absolute;
     display: flex;
     justify-content: center;
@@ -19,7 +18,7 @@
     border-radius: 50%;
 opacity: 0;
 }
-.movie:hover .data{
+.tv:hover .data{
 height: 100%;
 width: 100%;
 border-radius: 0px !important;
@@ -34,4 +33,3 @@ opacity: 1;
     color: white;
     font-weight: bold;
 }
-

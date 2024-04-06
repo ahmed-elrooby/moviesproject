@@ -1,46 +1,23 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import home from "./Home.module.css";
 import { Link } from "react-router-dom";
+import Lottie from "lottie-react";
+import loaddingAnimation from "../images/loadding.json";
+import { motion } from "framer-motion";
+import { Context } from "../../Context/ContextFunction";
+import { Helmet } from "react-helmet";
 
 const Home = () => {
-  const [allmovies, setAllmovies] = useState(null);
-  const [alltv, setAlltv] = useState(null);
-  async function movies() {
-    try {
-      const { data } = await axios.get(
-        "https://api.themoviedb.org/3/trending/movie/day?api_key=0bd0730b59625b4570f8f531b92473f1"
-      );
-      setAllmovies(data.results);
-    }
-     catch (error) {
-      console.error("error",error)
-      
-    }
-  }
-
-
-  async function getTv() {
-    try{
-      const { data } = await axios.get(
-        "https://api.themoviedb.org/3/trending/tv/day?api_key=0bd0730b59625b4570f8f531b92473f1"
-      );
-      setAlltv(data.results)
-    }catch(error){
-      console.error("error",error)
-
-    }
-  }
-  useEffect(() => {
-    movies();
-    getTv();
-  }, []);
-
+  const { allmovies, alltv } = useContext(Context);
   return (
     <>
+      <Helmet>
+        <title>Home Page</title>
+        <meta name="description" content=" Home Page" />
+      </Helmet>
       {allmovies && alltv !== null ? (
         <div className="container pt-4">
-          <div className="row align-items-center">
+          <div className="row mt-5 align-items-center">
             <div className="col-md-3 text-capitalize  py-md-5 mt-md-4 mb-md-4">
               <div className={home.title}>
                 <h5>trending movies to watch</h5>
@@ -48,28 +25,52 @@ const Home = () => {
               </div>
             </div>
 
-            {allmovies.map((movie, idx) => (
-              <div key={idx} className="col-md-3">
-                <Link to={`/moviedetails/movie/${movie.id}`}>
-                  <div className="movie position-relative">
-                    <img
-                      className="w-100"
-                      src={
-                        "https://image.tmdb.org/t/p/original/" +
-                        movie.poster_path
-                      }
-                      alt=""
-                    />
-                    <h4>{movie.title}</h4>
-                    <span className={home.vote}>
-                      {movie.vote_average.toFixed(1)} / 10
-                    </span>
-                  </div>
-                </Link>
-              </div>
-            ))}
+            {allmovies.length >= 1 ? (
+              allmovies.map((movie, idx) => (
+                <motion.div
+                  initial={{ scale: 0.6 }}
+                  transition={{
+                    duration: 0.2,
+                    type: "spring",
+                    stiffness: 100,
+                    mass: 0.5,
+                    damping: 3,
+                  }}
+                  whileInView={{
+                    scale: 1,
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                  }}
+                  key={idx}
+                  className="col-md-3"
+                >
+                  <Link to={`/moviedetails/movie/${movie.id}`}>
+                    <div className={home.movie}>
+                      <img
+                        className="w-100"
+                        src={
+                          "https://image.tmdb.org/t/p/original/" +
+                          movie.poster_path
+                        }
+                        alt=""
+                      />
+                      <div className={home.data}>
+                        <h4 className={home.name}>{movie.title}</h4>
+                      </div>
+                      <span className={home.vote}>
+                        {Math.round(movie.vote_average)} / 10
+                      </span>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))
+            ) : (
+              <h1 className="vh-100 d-flex justify-content-center text-capitalize align-items-center">
+                there is no movies
+              </h1>
+            )}
           </div>
-
           <div className="row align-items-center">
             <div className="col-md-3 text-capitalize py-md-5 mt-md-4 mb-md-4">
               <div className={home.title}>
@@ -77,32 +78,56 @@ const Home = () => {
                 <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
               </div>
             </div>
-            {alltv.map((tvshow, idx) => (
-              <div key={idx} className="col-md-3">
-                <Link to={`/moviedetails/tv/${tvshow.id}`}>
-                <div className="tv position-relative">
-                  <img
-                    className="w-100"
-                    src={
-                      "https://image.tmdb.org/t/p/original/" +
-                      tvshow.poster_path
-                    }
-                    alt="tv"
-                  />
-                  <h4>{tvshow.name}</h4>
-                  <span className={home.vote}>
-                    {tvshow.vote_average.toFixed(1)} / 10
-                  </span>
-                </div>
-                </Link>
-
-              </div>
-            ))}
+            {alltv.length >= 1 ? (
+              alltv.map((tvshow, idx) => (
+                <motion.div
+                  initial={{ scale: 0.6 }}
+                  transition={{
+                    duration: 0.2,
+                    type: "spring",
+                    stiffness: 100,
+                    mass: 0.5,
+                    damping: 3,
+                  }}
+                  whileInView={{
+                    scale: 1,
+                  }}
+                  whileHover={{
+                    scale: 1.1,
+                  }}
+                  key={idx}
+                  className="col-md-3"
+                >
+                  <Link to={`/moviedetails/tv/${tvshow.id}`}>
+                    <div className={home.tv}>
+                      <img
+                        className="w-100"
+                        src={
+                          "https://image.tmdb.org/t/p/original/" +
+                          tvshow.poster_path
+                        }
+                        alt="tv"
+                      />
+                      <div className={home.data}>
+                        <h4 className={home.name}>{tvshow.name}</h4>
+                      </div>
+                      <span className={home.vote}>
+                        {Math.round(tvshow.vote_average)}
+                      </span>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))
+            ) : (
+              <h1 className="vh-100 d-flex justify-content-center text-capitalize align-items-center">
+                there is no tv
+              </h1>
+            )}
           </div>
         </div>
       ) : (
         <div className="vh-100 d-flex justify-content-center align-items-center">
-          <i className="fa-solid fa-spinner fa-spin fa-7x text-white"></i>
+          <Lottie animationData={loaddingAnimation}></Lottie>
         </div>
       )}
     </>

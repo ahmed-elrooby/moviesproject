@@ -1,38 +1,25 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import "./Header.css";
-function Header({ current,remove }) {
-  const [value, setValue] = useState("");
-  const [data, setData] = useState([]);
+import { motion } from "framer-motion";
+import { Context } from "../../Context/ContextFunction";
+function Header() {
+  // { current, remove, search }
+  const {search,remove,tok} = useContext(Context)
   const navigate = useNavigate();
-  // let { id, media } = useParams();
 
-function logout(){
-  let pro = window.confirm("are you sure to log out ")
-  if(pro){
-    remove();
-    navigate("/login")
+  function logout() {
+    let pro = window.confirm("are you sure to log out ");
+    if (pro) {
+      remove();
+      navigate("/login");
+    }
   }
 
-}
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
+  const onSearch = (word) => {
+    search(word);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=0bd0730b59625b4570f8f531b92473f1&query=${value}`
-      );
-      const json = await response.json();
-      setData(json.results);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-dark position-relative ">
@@ -53,28 +40,20 @@ function logout(){
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             {/* ms ==> left     &&    me==> end => right */}
-            {current  ? (
-              <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            {tok ? (
+              <ul className="navbar-nav me-auto mb-2 mb-lg-0 fw-bold">
                 <li className="nav-item">
-                  <Link
-                    className="nav-link active"
-                    aria-current="page"
-                    to="home"
-                  >
+                  <Link className="nav-link " aria-current="page" to="home">
                     Home
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link
-                    className="nav-link active"
-                    aria-current="page"
-                    to="movies"
-                  >
+                  <Link className="nav-link " aria-current="page" to="movies">
                     Movies
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link className="nav-link active" aria-current="page" to="tv">
+                <li className="nav-item text-light">
+                  <Link className="nav-link " aria-current="page" to="tv">
                     TV
                   </Link>
                 </li>
@@ -83,58 +62,76 @@ function logout(){
               ""
             )}
 
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center align-items-md-start">
+            <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center align-items-md-start fw-bold">
               <li className="nav-item  ">
-                <i className="fa-brands me-2 fa-facebook-f"></i>
+                <i className="fa-brands me-2 fa-facebook-f "></i>
                 <i className="fa-brands me-2 fa-twitter"></i>
                 <i className="fa-brands me-2 fa-instagram"></i>
                 <i className="fa-brands me-2 fa-spotify"></i>
               </li>
-              {current ? (<>
-                <li className="nav-item">
-                  <span onClick={logout} className="nav-link active"  style={{cursor:"pointer"}} aria-current="page">
-                    Logedout
-                  </span>
-                </li>
-                <li className="nav-item">
+              {tok ? (
+                <>
+                  <li className="nav-item fw-bold ">
+                    <span
+                      onClick={logout}
+                      className="nav-link "
+                      style={{ cursor: "pointer" }}
+                      aria-current="page"
+                    >
+                      <i class="fa-solid fa-arrow-right-from-bracket"></i>{" "}
+                      LogOut
+                    </span>
+                  </li>
+                  <li className="nav-item">
                     <Link
-                      className="nav-link active"
+                      className="nav-link text-white"
                       aria-current="page"
                       to="profile"
                     >
-                      Profile
+                      <motion.i
+                        initial={{ scale: 0.9 }}
+                        transition={{
+                          duration: 0.2,
+                          type: "spring",
+                          stiffness: 100,
+                          mass: 0.5,
+                          damping: 3,
+                        }}
+                        whileHover={{
+                          scale: 1.1,
+                          color: "#1ABCFE",
+                        }}
+                        class="prof fa-solid fa-user fa-2x me-2"
+                      ></motion.i>{" "}
                     </Link>
                   </li>
 
-                  <form className="d-flex" role="search" onSubmit={handleSubmit}>
-              <input
-                className="form-control me-2 w-50"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-                onChange={handleChange}
-                value={value}
-              />
-              <button className="btn btn-outline-info text-white" type="submit">
-                Search
-              </button>
-            </form>
-              </>
-
+                  <form className="d-flex" role="search">
+                    <input
+                      onChange={(e) => onSearch(e.target.value)}
+                      className="form-control me-2 w-50"
+                      type="search"
+                      placeholder="Search"
+                      aria-label="Search"
+                    />
+                    <button
+                      className="btn btn-outline-info text-white"
+                      type="submit"
+                    >
+                      Search
+                    </button>
+                  </form>
+                </>
               ) : (
                 <>
                   <li className="nav-item">
-                    <Link
-                      className="nav-link active"
-                      aria-current="page"
-                      to="/login"
-                    >
+                    <Link className="nav-link " aria-current="page" to="/login">
                       Login
                     </Link>
                   </li>
                   <li className="nav-item">
                     <Link
-                      className="nav-link active"
+                      className="nav-link "
                       aria-current="page"
                       to="/register"
                     >
@@ -144,45 +141,9 @@ function logout(){
                 </>
               )}
             </ul>
-
-
           </div>
         </div>
       </nav>
-
-      {value && data.length > 0 && (
-        <div className="dropdown-content">
-          <div className="container">
-            <div className="row">
-              {value &&
-                data
-                  .filter(
-                    (item) =>
-                      item.title.toLowerCase().includes(value.toLowerCase()) &&
-                      item.title !== value
-                  )
-                  .map((item) => (
-                    <Link
-                      className="col-md-3 position-relative"
-                      key={item.id}
-                      onClick={(e) => setValue(item.title)}
-                      to="/moviedetails"
-                    >
-                      <img
-                        className="w-100"
-                        src={
-                          "https://image.tmdb.org/t/p/original/" +
-                          item.poster_path
-                        }
-                        alt=""
-                      />
-                      <h5>{item.title}</h5>
-                    </Link>
-                  ))}
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }

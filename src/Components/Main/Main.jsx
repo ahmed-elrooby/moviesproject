@@ -1,13 +1,14 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Header from "./../Header/Header";
+import Rights from "../Rights/Rights";
 
-function Main({ current,remove }) {
+function Main() {
   return (
     <>
-      <Header current={current} remove={remove} />
+      <Header />
       <Outlet />
-
+      <Rights />
     </>
   );
 }

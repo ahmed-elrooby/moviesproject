@@ -1,4 +1,4 @@
-.dropdown-content{
+.dropdown{
     display: block;
     position: absolute;
     min-width: 100%;
@@ -6,3 +6,4 @@
     height: 100vh;
     background-color:#1abdfee8;
 }
+

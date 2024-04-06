@@ -6,6 +6,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css"
 import "bootstrap/dist/css/bootstrap.min.css"
 import './index.css';
 import { App } from './App';
+import { ContextFunction } from './Context/ContextFunction';
 
 
 
@@ -13,7 +14,9 @@ import { App } from './App';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-   <App/>
+    <ContextFunction>
+    <App/>
+    </ContextFunction>
   </React.StrictMode>
 );
 
