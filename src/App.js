@@ -109,16 +109,13 @@ export function App() {
           }}
         >
           <Lottie
-            style={{ height: "500px" }}
+            style={{ height: "500px",borderRadius:"20px",backgroundColor:"#1ABCFE"}}
             animationData={offlineAnimation}
-          ></Lottie>
-
-          <div
-            className="bg-danger border border-2 p-2"
-            style={{ position: "absolute", bottom: "-43px", left: "150spx" }}
           >
-            <h1>opps your internet has been lost</h1>
-          </div>
+
+          </Lottie>
+
+  
         </div>
       </Offline>
       <RouterProvider router={router} />

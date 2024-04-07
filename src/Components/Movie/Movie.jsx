@@ -6,6 +6,8 @@ import loaddingAnimation from "../images/loadding.json";
 import { motion } from "framer-motion";
 import { Context } from "../../Context/ContextFunction";
 import { Helmet } from "react-helmet";
+import notfound from "../images/not exist.json";
+
 
 function Movie() {
   const {allmovies} = useContext(Context);
@@ -54,16 +56,18 @@ function Movie() {
                       </div>
 
                       <span className={MovieCss.vote}>
-                        {Math.round(mov.vote_average)} / 10
+                      {mov && mov.vote_average?.toFixed(1)} / 10
                         </span>
                     </div>
                   </Link>
                 </motion.div>
               ))
             ) : (
-              <h1 className="vh-100 d-flex justify-content-center text-capitalize align-items-center">
-                there is no movie
-              </h1>
+              <div className=" d-flex justify-content-center align-items-center">
+              <Lottie animationData={notfound}
+              style={{height:"400px"}}
+              ></Lottie>
+            </div>
             )}
           </div>
         </div>

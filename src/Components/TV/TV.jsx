@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import tvCss from "./TV.module.css";
 import Lottie from "lottie-react";
 import loaddingAnimation from "../images/loadding.json";
+import notfound from "../images/not exist.json";
 import { motion } from "framer-motion";
 import { Context } from "../../Context/ContextFunction";
 import { Helmet } from 'react-helmet';
@@ -54,16 +55,18 @@ function TV() {
                       </div>
 
                       <span className={tvCss.vote}>
-                        {Math.round(tvs.vote_average)} / 10
+                      {tvs && tvs.vote_average?.toFixed(1)} / 10
                         </span>
                     </div>
                   </Link>
                 </motion.div>
               ))
             ) : (
-              <h1 className="vh-100 d-flex justify-content-center text-capitalize align-items-center">
-                there is no tv
-              </h1>
+              <div className=" d-flex justify-content-center align-items-center">
+              <Lottie animationData={notfound}
+              style={{height:"400px"}}
+              ></Lottie>
+            </div>
             )}
           </div>
         </div>
