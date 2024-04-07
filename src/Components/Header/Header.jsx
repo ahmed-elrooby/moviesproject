@@ -5,13 +5,13 @@ import { motion } from "framer-motion";
 import { Context } from "../../Context/ContextFunction";
 function Header() {
   // { current, remove, search }
-  const {search,remove,tok} = useContext(Context)
+  const {search,RemoveData,tok} = useContext(Context)
   const navigate = useNavigate();
 
   function logout() {
     let pro = window.confirm("are you sure to log out ");
     if (pro) {
-      remove();
+      RemoveData();
       navigate("/login");
     }
   }

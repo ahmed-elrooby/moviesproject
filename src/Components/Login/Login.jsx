@@ -1,14 +1,15 @@
 import Joi from 'joi';
 import Lottie from 'lottie-react';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import LoginAnimation from "../images/Login.json"
 import axios from 'axios';
 import {motion} from "framer-motion"
 import { Helmet } from "react-helmet";
+import { Context } from '../../Context/ContextFunction';
 
-const Login = ( {use}) => {
-
+const Login = ( ) => {
+const {getlogged} = useContext(Context)
 
 
 const [apiMessage, setApiMessage] = useState("")
@@ -34,11 +35,10 @@ const [spinner, setSpinner] = useState(false)
   async function sendUser(){
     try{
       const {data} = await axios.post("https://ecommerce.routemisr.com/api/v1/auth/signin",user)
-console.log(data);
 if(data.message === "success"){
         //call api
         localStorage.setItem("tkn",data.token)
-        use();
+        getlogged();
         navigate("/home")
 
         // go to home page 
@@ -65,7 +65,6 @@ function regUser(e){
 
   })
   let response = schema.validate(user,{abortEarly:false})
-  console.log(response);
   if(response.error === undefined){
     sendUser();
         
